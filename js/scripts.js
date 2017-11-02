@@ -61,3 +61,29 @@ function placeNumber(number) {
  $("#number-" + count).css(styles);
  count++;
 }
+
+$(document).ready(function () {
+  'use strict';
+  $("form#ping-pong").submit(function (event) {
+    event.preventDefault();
+    $("ul#result").empty();
+    var inputNumber = parseInt($("input#number").val()),
+      numbers = pingPong(inputNumber);
+
+
+    function showNumbers(index, time) {
+      if (index < numbers.length) {
+        setTimeout(function () {
+          placeNumber(numbers[index]);
+
+          showNumbers(++index, time / index);
+        }, time);
+      }
+    }
+    showNumbers(0, 1000);
+  });
+
+  $("button#clear").click(function () {
+    $(".random-item").remove();
+  });
+});
